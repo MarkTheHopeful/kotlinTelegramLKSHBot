@@ -1,0 +1,23 @@
+package main.kotlin
+
+import java.io.BufferedReader
+import java.io.InputStreamReader
+
+fun main() {
+
+//    val mainParser = table.ParallelTable("/home/mark/IdeaProjects/LKManager/src/main/kotlin/test.html")
+//    val mainParser = table.ParallelTable("/home/mark/IdeaProjects/LKManager/tabled.html")
+    val mainParser = table.ParallelTable("/home/mark/IdeaProjects/LKManager/table.html", true)
+
+    val br = BufferedReader(InputStreamReader(System.`in`))
+
+    var input = br.readLine()
+    while (input != "q") {
+        val person = mainParser.getPersonByName(input)
+        val listed = person.getOrderProblems(mainParser.problems)
+        for (pr in listed) {
+            println(pr)
+        }
+        input = br.readLine()
+    }
+}
