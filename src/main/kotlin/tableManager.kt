@@ -20,6 +20,17 @@ class TableManager(chatId: Long) {
         }
     }
 
+    fun getContestsInformation(): String {
+        var result = ""
+        for (contest in table?.contests ?: return "Table is not initialized or something is wrong") {
+            result += "$contest contains problems:\n"
+            for (problem in contest.container) {
+                result += "$problem\n";
+            }
+        }
+        return result
+    }
+
     fun getAllInformation(username: String): String {
         try {
             val person = table?.getPersonByName(username) ?: return "Table is not initialized or something is wrong"
