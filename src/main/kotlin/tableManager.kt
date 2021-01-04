@@ -24,9 +24,7 @@ class TableManager(chatId: Long) {
         var result = ""
         for (contest in table?.contests ?: return "Table is not initialized or something is wrong") {
             result += "$contest contains problems:\n"
-            for (problem in contest.container) {
-                result += "$problem\n";
-            }
+            result += joinProblemArray(contest.container)
         }
         return result
     }

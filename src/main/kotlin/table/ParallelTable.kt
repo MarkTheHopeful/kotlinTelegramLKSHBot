@@ -117,7 +117,7 @@ class ParallelTable(rawTableInput: String) {
     }
 
     init {
-        var rawInput = rawTableInput.substringAfter("<tr>")
+        var rawInput = normalizeOutputText(rawTableInput.substringAfter("<tr>"))
 
         val contestsParsed = parseContests(rawInput.substringBefore("</tr>"))
         this.contests.addAll(contestsParsed)

@@ -10,12 +10,14 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+    maven("https://mvnrepository.com")
     maven("https://jitpack.io")
 }
 
 dependencies {
     testImplementation(kotlin("test-junit"))
     implementation("io.github.kotlin-telegram-bot.kotlin-telegram-bot:telegram:6.0.1")
+    implementation("org.apache.commons:commons-text:1.9")
 }
 
 tasks.test {

@@ -59,7 +59,7 @@ fun main() {
                     bot.sendMessage(chatId = message.chat.id, text = "You have to init table first (use /init_table <link>)")
                     return@command
                 }
-                bot.sendMessage(chatId = message.chat.id, text="Sendind all contests information...")
+                bot.sendMessage(chatId = message.chat.id, text="Sending all contests information...")
                 val textContestsInfo = chatsToTableManagers[message.chat.id]?.getContestsInformation() ?: throw Exception("How it became null???")
                 bot.sendMessage(chatId = message.chat.id, text=textContestsInfo)
             }
