@@ -51,7 +51,8 @@ fun main() {
                 }
                 bot.sendMessage(chatId = message.chat.id, text=username)
                 val textInfo = chatsToTableManagers[message.chat.id]?.getAllInformation(username) ?: throw Exception("How it became null???")
-                bot.sendMessage(chatId = message.chat.id, text = textInfo)
+//                bot.sendMessage(chatId = message.chat.id, text = textInfo)
+                splitAndSend(bot, message.chat.id, textInfo)
             }
 
             command("get_contests") {

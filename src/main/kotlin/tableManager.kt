@@ -23,8 +23,7 @@ class TableManager(chatId: Long) {
     fun getContestsInformation(): String {
         var result = ""
         for (contest in table?.contests ?: return "Table is not initialized or something is wrong") {
-            result += "$contest contains problems:\n"
-            result += joinProblemArray(contest.container)
+            result += "$contest contains ${contest.container.size} problems\n"
         }
         return result
     }

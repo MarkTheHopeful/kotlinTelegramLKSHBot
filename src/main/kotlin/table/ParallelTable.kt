@@ -16,7 +16,8 @@ class ParallelTable(rawTableInput: String) {
         for (i in 0 until lines.size) {
             if ("class=\"contest\"" in lines[i]) {
                 val name = lines[i].substringAfter("title=\"").substringBefore("\">")
-                result.add(Contest(id, name))
+                val problemsCount = Integer.parseInt(lines[i].substringBefore("\" class").substringAfter("colspan=\""))
+                result.add(Contest(id, name, problemsCount))
                 id++
             }
         }
@@ -27,12 +28,17 @@ class ParallelTable(rawTableInput: String) {
         val result = mutableListOf<Problem>()
         val lines = rawInput.split("td>")
         var id = 0
-        var contest_id = -1
-        for (i in 0 until lines.size) {
+        var contestId = 0
+        var currentContestProblemsAdded = 0
+        for (i in lines.indices) {
             if ("title" !in lines[i]) continue
             val name = lines[i].substringAfter("title=\"").substringBefore("\"")
-            if (name[0] == 'A') contest_id++
-            result.add(Problem(id++, name, contest_id, 0))
+            if (currentContestProblemsAdded == this.contests[contestId].size) {
+                contestId++
+                currentContestProblemsAdded = 0
+            }
+            result.add(Problem(id++, name, contestId, 0))
+            currentContestProblemsAdded++
         }
         return result
     }
@@ -82,7 +88,7 @@ class ParallelTable(rawTableInput: String) {
                     this.problems[i - 4].times_solved++
                     person.pendingReview.add(this.problems[i - 4])
                 }
-                "verdict TL", "verdict WA", "verdict RT", "verdict ML" -> {
+                "verdict TL", "verdict WA", "verdict RT", "verdict ML", "verdict PE", "verdict CE" -> {
                     person.triedProblems.add(this.problems[i - 4])
                 }
                 "verdict NO" -> {

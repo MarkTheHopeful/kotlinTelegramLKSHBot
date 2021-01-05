@@ -1,6 +1,6 @@
 package table
 
-class Contest(val id: Int, val name: String) {
+class Contest(val id: Int, val name: String, val size: Int) {
     val container: MutableList<Problem> = mutableListOf()
 
     fun addProblem(problem: Problem) {
