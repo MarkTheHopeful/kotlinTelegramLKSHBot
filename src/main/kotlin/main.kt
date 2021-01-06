@@ -100,6 +100,20 @@ fun main() {
                 splitAndSend(bot, message.chat.id, answer)
             }
 
+            command("get_my_magic") {
+                val username = joinStringArray(args, " ")
+                val howMuch = 10
+                if (chatsToTableManagers[message.chat.id] == null) {
+                    bot.sendMessage(
+                        chatId = message.chat.id,
+                        text = "You have to init table first (use /init_table <link>)"
+                    )
+                    return@command
+                }
+                val answer = chatsToTableManagers[message.chat.id]?.getPersonalSolveList(username, howMuch)!!
+                splitAndSend(bot, message.chat.id, answer)
+            }
+
             command("inline_buttons") {
                 val inlineKeyboardMarkup = InlineKeyboardMarkup.create(
                     listOf(InlineKeyboardButton.CallbackData(text = "Test Inline Button", callbackData = "testButton")),

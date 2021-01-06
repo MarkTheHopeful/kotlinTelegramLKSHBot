@@ -249,6 +249,15 @@ class ParallelTable(rawTableInput: String) {
         return size
     }
 
+    fun getPersonalMergers(name: String, howMuch: Int): List<Pair<Int, Pair<Int, Int>>> {
+        var based = getBestMergers(9999)
+        if (this.namesToEjids[name] == null) {
+            throw Exception("No such user")
+        }
+        val id: Int = this.namesToEjids[name]!!
+        return based.filter { it.second.first == id }.take(howMuch)
+    }
+
     fun getBestMergers(howMuch: Int): List<Pair<Int, Pair<Int, Int>>> {
         if (dsu.isEmpty()) {
             countSuperDumbnessGlobal()

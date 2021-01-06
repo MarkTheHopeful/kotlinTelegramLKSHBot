@@ -42,6 +42,15 @@ class TableManager(chatId: Long) {
         return this.table?.countSuperDumbnessGlobal().toString() ?: return "Table is not initialized or something is wrong"
     }
 
+    fun getPersonalSolveList(person: String, howMuch: Int): String {
+        val raw = this.table?.getPersonalMergers(person, howMuch) ?: return "Table is not initialized or something is wrong"
+        var result = ""
+        for (e in raw) {
+            result += "${e.first} points will give the task ${this.table!!.problems[e.second.second]}\n"
+        }
+        return result
+    }
+
     fun getTheSolveList(howMuch: Int): String {
         val raw = this.table?.getBestMergers(howMuch) ?: return "Table is not initialized or something is wrong"
         var result = ""
