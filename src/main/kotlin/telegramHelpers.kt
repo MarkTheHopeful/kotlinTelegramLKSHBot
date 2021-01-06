@@ -26,5 +26,5 @@ fun splitAndSend(bot: Bot, chatId: Long, message: String) {
             }
         }
     }
-    if (prevN != message.indices.last) bot.sendMessage(chatId=chatId, text=message.substring(prevB))
+    if (prevB != message.indices.last) bot.sendMessage(chatId=chatId, text=message.substring(prevB))
 }

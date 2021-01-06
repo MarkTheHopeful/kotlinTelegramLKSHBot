@@ -38,4 +38,17 @@ class TableManager(chatId: Long) {
         }
     }
 
+    fun getMagicExamNumber(): String {
+        return this.table?.countSuperDumbnessGlobal().toString() ?: return "Table is not initialized or something is wrong"
+    }
+
+    fun getTheSolveList(howMuch: Int): String {
+        val raw = this.table?.getBestMergers(howMuch) ?: return "Table is not initialized or something is wrong"
+        var result = ""
+        for (e in raw) {
+            result += "${e.first} points will give the task ${this.table!!.problems[e.second.second]} by person ${this.table!!.persons[e.second.first + 1]}\n"
+        }
+        return result
+    }
+
 }

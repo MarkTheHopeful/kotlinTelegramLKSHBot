@@ -39,30 +39,65 @@ fun main() {
                     chatsToTableManagers[message.chat.id] = TableManager(message.chat.id)
                 }
                 // bot.sendMessage(chatId = message.chat.id, text = "Some weird shit happened")
-                chatsToTableManagers[message.chat.id]?.updateTable(tableString) ?: throw Exception("How it became null???")
+                chatsToTableManagers[message.chat.id]?.updateTable(tableString)
+                    ?: throw Exception("How it became null???")
                 bot.sendMessage(chatId = message.chat.id, text = "Table updated successfully. Now enter /get_info")
             }
 
             command("get_info") {
                 val username = joinStringArray(args, " ")
                 if (chatsToTableManagers[message.chat.id] == null) {
-                    bot.sendMessage(chatId = message.chat.id, text = "You have to init table first (use /init_table <link>)")
+                    bot.sendMessage(
+                        chatId = message.chat.id,
+                        text = "You have to init table first (use /init_table <link>)"
+                    )
                     return@command
                 }
-                bot.sendMessage(chatId = message.chat.id, text=username)
-                val textInfo = chatsToTableManagers[message.chat.id]?.getAllInformation(username) ?: throw Exception("How it became null???")
+                bot.sendMessage(chatId = message.chat.id, text = username)
+                val textInfo = chatsToTableManagers[message.chat.id]?.getAllInformation(username)
+                    ?: throw Exception("How it became null???")
 //                bot.sendMessage(chatId = message.chat.id, text = textInfo)
                 splitAndSend(bot, message.chat.id, textInfo)
             }
 
             command("get_contests") {
                 if (chatsToTableManagers[message.chat.id] == null) {
-                    bot.sendMessage(chatId = message.chat.id, text = "You have to init table first (use /init_table <link>)")
+                    bot.sendMessage(
+                        chatId = message.chat.id,
+                        text = "You have to init table first (use /init_table <link>)"
+                    )
                     return@command
                 }
-                bot.sendMessage(chatId = message.chat.id, text="Sending all contests information...")
-                val textContestsInfo = chatsToTableManagers[message.chat.id]?.getContestsInformation() ?: throw Exception("How it became null???")
-                bot.sendMessage(chatId = message.chat.id, text=textContestsInfo)
+                bot.sendMessage(chatId = message.chat.id, text = "Sending all contests information...")
+                val textContestsInfo = chatsToTableManagers[message.chat.id]?.getContestsInformation()
+                    ?: throw Exception("How it became null???")
+                bot.sendMessage(chatId = message.chat.id, text = textContestsInfo)
+            }
+
+            command("get_magic_number") {
+                if (chatsToTableManagers[message.chat.id] == null) {
+                    bot.sendMessage(
+                        chatId = message.chat.id,
+                        text = "You have to init table first (use /init_table <link>)"
+                    )
+                    return@command
+                }
+                val answer = chatsToTableManagers[message.chat.id]?.getMagicExamNumber()
+                    ?: throw Exception("How it became null???")
+                bot.sendMessage(chatId = message.chat.id, text = answer)
+            }
+
+            command("get_magic_list") {
+                val howMuch = 30
+                if (chatsToTableManagers[message.chat.id] == null) {
+                    bot.sendMessage(
+                        chatId = message.chat.id,
+                        text = "You have to init table first (use /init_table <link>)"
+                    )
+                    return@command
+                }
+                val answer = chatsToTableManagers[message.chat.id]?.getTheSolveList(howMuch)!!
+                splitAndSend(bot, message.chat.id, answer)
             }
 
             command("inline_buttons") {
@@ -93,7 +128,7 @@ fun main() {
                     Then you can get the list of problems to solve:
                     /get_info <Surname> <Name>
                 """.trimIndent()
-                bot.sendMessage(chatId = message.chat.id, text=help)
+                bot.sendMessage(chatId = message.chat.id, text = help)
             }
 
             text("ping") {
