@@ -255,7 +255,7 @@ class ParallelTable(rawTableInput: String) {
             throw Exception("No such user")
         }
         val id: Int = this.namesToEjids[name]!!
-        return based.filter { it.second.first == id }.take(howMuch)
+        return based.filter { it.second.first == id - 1}.take(howMuch)
     }
 
     fun getBestMergers(howMuch: Int): List<Pair<Int, Pair<Int, Int>>> {
